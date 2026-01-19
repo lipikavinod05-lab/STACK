@@ -1,0 +1,36 @@
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+bool backspaceCompare(char* s, char* t) {
+    int top = -1, top1 = -1;
+    int c = 0;
+    int sl = strlen(s);
+    int tl = strlen(t);
+    char s1[sl];
+    char s2[tl];
+    int i = 0;
+    for (i = 0; i < sl; i++) {
+        if (isalpha(s[i])) {
+            s1[++top] = s[i];
+        } else if (s[i] == '#' && top >= 0) {
+            top--;
+        }
+    }
+    for (i = 0; i < tl; i++) {
+        if (isalpha(t[i])) {
+            s2[++top1] = t[i];
+        } else if (t[i] == '#' && top1 >= 0) {
+            top1--;
+        }
+    }
+    if (top != top1)
+        return false;
+    int key = top + 1;
+
+    while (top >= 0) {
+        if (s1[top] != s2[top])
+            return false;
+        top--;
+    }
+    return true;
+}
