@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+bool isValid(char* s) {
+    char st[strlen(s)];
+    int top = -1;
+    
+    for(int i = 0; s[i] != '\0'; i++) {
+        if(s[i] == '(' || s[i] == '[' || s[i] == '{') {
+            st[++top] = s[i];  // Push to stack
+        } 
+        else {
+            if(top == -1 || 
+               (s[i] == ')' && st[top] != '(') || 
+               (s[i] == '}' && st[top] != '{') || 
+               (s[i] == ']' && st[top] != '[')) {
+                return false;
+            }
+            top--;  // Pop from stack
+        }
+    }
+    return top == -1;
+}
